@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>โปรไฟล์น้องพันซ์ 🐒</title>
+
+  <!-- Bootstrap 5.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Font ภาษาไทย: Mali -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brown-dark:  #4E342E;
+      --brown-mid:   #6D4C41;
+      --brown-soft:  #8D6E63;
+      --cream:       #FFF8F0;
+      --cream-2:     #FBEEDF;
+      --orange:      #E8873A;
+      --orange-soft: #F6C79B;
+      --leaf:        #7A9E7E;
+      --page-bg: linear-gradient(160deg, #4E342E 0%, #6D4C41 55%, #8D6E63 100%);
+      --card-bg: var(--cream);
+      --card-border: var(--orange-soft);
+      --card-shadow: rgba(0, 0, 0, .35);
+      --text-main: var(--brown-dark);
+      --text-muted: var(--brown-soft);
+      --surface: var(--cream-2);
+      --fav-bg: linear-gradient(135deg, #FBEEDF, #F6DFC4);
+    }
+
+    body.dark {
+      --brown-dark:  #FFF3E6;
+      --brown-mid:   #F8CFA3;
+      --brown-soft:  #D9B08C;
+      --cream:       #2A211D;
+      --cream-2:     #3A2C24;
+      --orange:      #FF9E4D;
+      --orange-soft: #A66A3D;
+      --leaf:        #8CC28C;
+      --page-bg: linear-gradient(160deg, #180F0C 0%, #2A1D17 55%, #3A2A22 100%);
+      --card-bg: #2F241F;
+      --card-border: #7A4B24;
+      --card-shadow: rgba(0, 0, 0, .62);
+      --text-main: #FFF3E6;
+      --text-muted: #DDB28C;
+      --surface: #3A2C24;
+      --fav-bg: linear-gradient(135deg, #3A2A22, #4D3529);
+    }
+
+    * { font-family: 'Mali', cursive; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page-bg);
+      color: var(--text-main);
+      overflow-x: hidden;
+      position: relative;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 5;
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--brown-dark);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .dark-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+    }
+    body.dark .dark-toggle {
+      background: rgba(40, 28, 22, 0.92);
+      color: #FFF3E6;
+    }
+
+    /* ---------- ลูกเล่น: หัวใจ & กล้วยลอยพื้นหลัง ---------- */
+    .floaties {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .floaty {
+      position: absolute;
+      bottom: -60px;
+      font-size: 1.6rem;
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg) scale(.8);      opacity: 0; }
+      12%  { opacity: .55; }
+      85%  { opacity: .35; }
+      100% { transform: translateY(-108vh) rotate(24deg) scale(1.1); opacity: 0; }
+    }
+
+    /* ---------- การ์ดหลัก ---------- */
+    .profile-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 140px 16px 60px;
+    }
+
+    .profile-card {
+      background: var(--card-bg);
+      border: 4px solid var(--card-border);
+      border-radius: 32px;
+      box-shadow: 0 24px 50px var(--card-shadow);
+      padding: 90px 28px 34px;
+      position: relative;
+      text-align: center;
+    }
+
+    /* ---------- รูปโปรไฟล์วงกลม ---------- */
+    .avatar {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 28%;
+      border: 6px solid var(--orange);
+      background: var(--cream-2);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .3);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .avatar:hover {
+      transform: translateX(-50%) scale(1.06) rotate(-3deg);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, .38);
+    }
+
+    .name {
+      font-weight: 700;
+      font-size: 2rem;
+      margin: 0;
+      color: var(--text-main);
+    }
+    .tagline {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-top: 4px;
+    }
+
+    /* ---------- กล่องข้อมูลย่อย ---------- */
+    .info-box {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 14px 10px;
+      height: 100%;
+      transition: transform .25s ease;
+    }
+    .info-box:hover { transform: translateY(-4px); }
+    .info-box .ico   { font-size: 1.5rem; }
+    .info-box .label { font-size: .8rem; color: var(--text-muted); }
+    .info-box .value { font-weight: 600; font-size: .98rem; color: var(--text-main); }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: left;
+      margin-bottom: 10px;
+      color: var(--brown-mid);
+    }
+    body.dark .text-muted {
+      color: var(--text-muted) !important;
+    }
+
+    /* ---------- Badge อุปนิสัย ---------- */
+    .trait {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 14px;
+      margin: 4px 3px;
+      font-size: .92rem;
+      box-shadow: 0 3px 0 #c96f2a;
+      transition: transform .2s ease;
+    }
+    .trait:hover { transform: translateY(-3px) rotate(-2deg); }
+    .trait.leaf  { background: var(--leaf); box-shadow: 0 3px 0 #5f8064; }
+
+    /* ---------- แถบสถิติ ---------- */
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .stat-name {
+      width: 130px;
+      text-align: left;
+      font-size: .95rem;
+      flex-shrink: 0;
+    }
+    .progress {
+      flex: 1;
+      height: 16px;
+      background: var(--surface);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, var(--orange), #F2A65A);
+      border-radius: 999px;
+      width: 0;
+      transition: width 1.4s cubic-bezier(.22, 1, .36, 1);
+    }
+    .stat-num {
+      width: 46px;
+      font-size: .85rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* ---------- กล่องของรัก ---------- */
+    .fav-box {
+      background: var(--fav-bg);
+      border: 2px dashed var(--orange);
+      border-radius: 20px;
+      padding: 16px;
+      text-align: left;
+    }
+
+    .divider {
+      border: none;
+      border-top: 2px dashed var(--orange-soft);
+      margin: 24px 0;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: var(--orange-soft);
+      font-size: .85rem;
+      padding-bottom: 28px;
+    }
+
+    @media (max-width: 480px) {
+      .profile-wrap { padding-top: 120px; }
+      .avatar { width: 160px; height: 160px; top: -85px; }
+      .profile-card { padding-top: 80px; }
+      .stat-name { width: 100px; font-size: .85rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- พื้นหลังหัวใจ + กล้วยลอย -->
+  <div class="floaties" id="floaties" aria-hidden="true"></div>
+
+  <main class="profile-wrap">
+    <section class="profile-card">
+      <button class="dark-toggle" id="darkToggle" type="button" aria-pressed="false" aria-label="เปิด/ปิดโหมดมืด">
+        <span id="toggleIcon">🌙</span>
+        <span id="toggleText">Dark mode</span>
+      </button>
+
+      <img src="punch.png" alt="รูปโปรไฟล์น้องพันซ์ ลิงน้อยกำลังกอดตุ๊กตาอุรังอุตัง" class="avatar">
+      <br><br>
+      <h1 class="name">น้องพั๊นซ์888 🐒</h1>
+      <p class="tagline">“ลิงน้อยจอมกอด ผู้ไม่ยอมปล่อยตุ๊กตา”</p>
+
+      <hr class="divider">
+
+      <!-- ข้อมูลพื้นฐาน -->
+      <div class="row g-2 g-md-3">
+        <div class="col-4">
+          <div class="info-box">
+            <div class="ico">🎂</div>
+            <div class="label">อายุ</div>
+            <div class="value" id="age">—</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="info-box">
+            <div class="ico">📅</div>
+            <div class="label">วันเกิด</div>
+            <div class="value">12 ก.พ. 2568</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="info-box">
+            <div class="ico">📍</div>
+            <div class="label">ที่อยู่</div>
+            <div class="value">หุบเขาหมอกน้อย<br>จ.เชียงใหม่</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- อุปนิสัย -->
+      <div class="section-title">💛 อุปนิสัย</div>
+      <div class="text-start">
+        <span class="trait">ขี้อ้อน 🥺</span>
+        <span class="trait leaf">ขี้กอด 🤗</span>
+        <span class="trait">ขี้สงสัย 👀</span>
+        <span class="trait leaf">ซนนิด ๆ 🙈</span>
+        <span class="trait">ชอบเล่นน้ำ 💦</span>
+        <span class="trait leaf">ไม่มีตุ๊กตาไม่ยอมนอน 🧸</span>
+      </div>
+
+      <hr class="divider">
+
+      <!-- สถิติ -->
+      <div class="section-title">📊 สถิติน้องพันซ์</div>
+      <div class="stat-row">
+        <div class="stat-name">ความน่ารัก</div>
+        <div class="progress"><div class="progress-bar" data-val="100"></div></div>
+        <div class="stat-num">100%</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-name">ความขี้อ้อน</div>
+        <div class="progress"><div class="progress-bar" data-val="95"></div></div>
+        <div class="stat-num">95%</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-name">ความซน</div>
+        <div class="progress"><div class="progress-bar" data-val="85"></div></div>
+        <div class="stat-num">85%</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-name">ความกล้าหาญ</div>
+        <div class="progress"><div class="progress-bar" data-val="60"></div></div>
+        <div class="stat-num">60%</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-name">ยอมปล่อยตุ๊กตา</div>
+        <div class="progress"><div class="progress-bar" data-val="5"></div></div>
+        <div class="stat-num">5%</div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ของรัก + เมนูโปรด -->
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="fav-box h-100">
+            <div class="section-title mb-1">🧸 ของรัก</div>
+            <div>“พี่ส้ม” ตุ๊กตาอุรังอุตัง<br>
+              <small class="text-muted">กอดตลอด 24 ชั่วโมง ห้ามใครแตะ</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="fav-box h-100">
+            <div class="section-title mb-1">🍌 เมนูโปรด</div>
+            <div>กล้วยน้ำว้าสุก · ฝรั่งหั่นชิ้น<br>
+              <small class="text-muted">กินวันละ 3 มื้อ ไม่เคยพลาด</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>ทำด้วย 🧡 สำหรับน้องพันซ์</footer>
+
+  <script>
+    // ----- คำนวณอายุจากวันเกิด -----
+    const birth = new Date(2025, 1, 12); // 12 ก.พ. 2568 (ค.ศ. 2025)
+    const now = new Date();
+    let years = now.getFullYear() - birth.getFullYear();
+    let months = now.getMonth() - birth.getMonth();
+    if (now.getDate() < birth.getDate()) months--;
+    if (months < 0) { years--; months += 12; }
+    document.getElementById('age').textContent =
+      (years > 0 ? years + ' ปี ' : '') + months + ' เดือน';
+
+    // ----- สร้างหัวใจ/กล้วยลอยพื้นหลัง -----
+    const icons = ['🧡', '💛', '🍌', '🤎', '🌿', '💛'];
+    const box = document.getElementById('floaties');
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('span');
+      el.className = 'floaty';
+      el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      el.style.left = Math.random() * 100 + '%';
+      el.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+      el.style.animationDuration = (11 + Math.random() * 10) + 's';
+      el.style.animationDelay = (-Math.random() * 18) + 's';
+      box.appendChild(el);
+    }
+
+    // ----- แถบสถิติวิ่งเมื่อเลื่อนถึง -----
+    const bars = document.querySelectorAll('.progress-bar');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.width = e.target.dataset.val + '%';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: .4 });
+    bars.forEach(b => io.observe(b));
+
+    // ----- ปุ่มสลับโหมดกลางคืน -----
+    const toggleBtn = document.getElementById('darkToggle');
+    const toggleIcon = document.getElementById('toggleIcon');
+    const toggleText = document.getElementById('toggleText');
+
+    const updateTheme = (isDark) => {
+      document.body.classList.toggle('dark', isDark);
+      toggleBtn.setAttribute('aria-pressed', String(isDark));
+      toggleIcon.textContent = isDark ? '☀️' : '🌙';
+      toggleText.textContent = isDark ? 'Light mode' : 'Dark mode';
+      localStorage.setItem('punch-theme', isDark ? 'dark' : 'light');
+    };
+
+    const savedTheme = localStorage.getItem('punch-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    updateTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
+
+    toggleBtn.addEventListener('click', () => {
+      const isDark = !document.body.classList.contains('dark');
+      updateTheme(isDark);
+    });
+  </script>
+</body>
+</html>
